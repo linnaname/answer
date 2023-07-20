@@ -10,11 +10,8 @@ import type {
   FormDataType,
 } from '@/common/interface';
 import { Unactivate, WelcomeTitle, PluginRender } from '@/components';
-import {
-  loggedUserInfoStore,
-  userCenterStore,
-} from '@/stores';
-import { guard, handleFormError, userCenter } from '@/utils';
+import { loggedUserInfoStore, userCenterStore} from '@/stores';
+import { guard, handleFormError } from '@/utils';
 import { login, checkImgCode, UcAgent } from '@/services';
 import { PicAuthCodeModal } from '@/components/Modal';
 
@@ -24,7 +21,6 @@ const Index: React.FC = () => {
   const [searchParams] = useSearchParams();
   const [refresh, setRefresh] = useState(0);
   const { user: storeUser, update: updateUser } = loggedUserInfoStore((_) => _);
-  const loginSetting = loginSettingStore((state) => state.login);
   const ucAgent = userCenterStore().agent;
   let ucAgentInfo: UcAgent['agent_info'] | undefined;
   if (ucAgent?.enabled && ucAgent?.agent_info) {
