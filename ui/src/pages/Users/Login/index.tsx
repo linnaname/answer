@@ -1,7 +1,7 @@
-import React, { FormEvent, useState, useEffect } from 'react';
-import { Container, Form, Button, Col } from 'react-bootstrap';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { Trans, useTranslation } from 'react-i18next';
+import React, { useState, useEffect } from 'react';
+import { Container, Col } from 'react-bootstrap';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { usePageTags } from '@/hooks';
 import type {
@@ -12,10 +12,9 @@ import type {
 import { Unactivate, WelcomeTitle, PluginRender } from '@/components';
 import {
   loggedUserInfoStore,
-  loginSettingStore,
   userCenterStore,
 } from '@/stores';
-import { floppyNavigation, guard, handleFormError, userCenter } from '@/utils';
+import { guard, handleFormError, userCenter } from '@/utils';
 import { login, checkImgCode, UcAgent } from '@/services';
 import { PicAuthCodeModal } from '@/components/Modal';
 
@@ -74,34 +73,6 @@ const Index: React.FC = () => {
     });
   };
 
-  const checkValidated = (): boolean => {
-    let bol = true;
-    const { e_mail, pass } = formData;
-
-    if (!e_mail.value) {
-      bol = false;
-      formData.e_mail = {
-        value: '',
-        isInvalid: true,
-        errorMsg: t('email.msg.empty'),
-      };
-    }
-
-    if (!pass.value) {
-      bol = false;
-      formData.pass = {
-        value: '',
-        isInvalid: true,
-        errorMsg: t('password.msg.empty'),
-      };
-    }
-
-    setFormData({
-      ...formData,
-    });
-    return bol;
-  };
-
   const handleLogin = (event?: any) => {
     if (event) {
       event.preventDefault();
@@ -141,22 +112,6 @@ const Index: React.FC = () => {
       });
   };
 
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    if (!checkValidated()) {
-      return;
-    }
-
-    if (imgCode.verify) {
-      setModalState(true);
-      return;
-    }
-
-    handleLogin();
-  };
-
   useEffect(() => {
     getImgCode();
   }, [refresh]);
@@ -182,83 +137,6 @@ const Index: React.FC = () => {
           ) : (
             <PluginRender type="Connector" className="mb-5" />
           )}
-          {canOriginalLogin ? (
-            <>
-              <Form noValidate onSubmit={handleSubmit}>
-                <Form.Group controlId="email" className="mb-3">
-                  <Form.Label>{t('email.label')}</Form.Label>
-                  <Form.Control
-                    required
-                    tabIndex={1}
-                    type="email"
-                    value={formData.e_mail.value}
-                    isInvalid={formData.e_mail.isInvalid}
-                    onChange={(e) =>
-                      handleChange({
-                        e_mail: {
-                          value: e.target.value,
-                          isInvalid: false,
-                          errorMsg: '',
-                        },
-                      })
-                    }
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {formData.e_mail.errorMsg}
-                  </Form.Control.Feedback>
-                </Form.Group>
-
-                <Form.Group controlId="password" className="mb-3">
-                  <div className="d-flex justify-content-between">
-                    <Form.Label>{t('password.label')}</Form.Label>
-                    <Link to="/users/account-recovery" tabIndex={2}>
-                      <small>{t('forgot_pass')}</small>
-                    </Link>
-                  </div>
-
-                  <Form.Control
-                    required
-                    tabIndex={1}
-                    type="password"
-                    // value={formData.pass.value}
-                    maxLength={32}
-                    isInvalid={formData.pass.isInvalid}
-                    onChange={(e) =>
-                      handleChange({
-                        pass: {
-                          value: e.target.value,
-                          isInvalid: false,
-                          errorMsg: '',
-                        },
-                      })
-                    }
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {formData.pass.errorMsg}
-                  </Form.Control.Feedback>
-                </Form.Group>
-
-                <div className="d-grid">
-                  <Button variant="primary" type="submit" tabIndex={1}>
-                    {t('login', { keyPrefix: 'btns' })}
-                  </Button>
-                </div>
-              </Form>
-              {loginSetting.allow_new_registrations && (
-                <div className="text-center mt-5">
-                  <Trans i18nKey="login.info_sign" ns="translation">
-                    Don’t have an account?
-                    <Link
-                      to={userCenter.getSignUpUrl()}
-                      tabIndex={2}
-                      onClick={floppyNavigation.handleRouteLinkClick}>
-                      Sign up
-                    </Link>
-                  </Trans>
-                </div>
-              )}
-            </>
-          ) : null}
         </Col>
       ) : null}
 
