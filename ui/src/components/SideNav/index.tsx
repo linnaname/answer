@@ -40,11 +40,6 @@ const Index: FC = () => {
             <span>{t('header.nav.tag')}</span>
           </NavLink>
 
-          <NavLink to="/users" className="nav-link">
-            <Icon name="people-fill" className="me-2" />
-            <span>{t('header.nav.user')}</span>
-          </NavLink>
-
           {can_revision || userInfo?.role_id === 2 ? (
             <>
               <div className="py-2 px-3 mt-3 small fw-bold">
