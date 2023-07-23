@@ -10,7 +10,7 @@ import type {
   FormDataType,
 } from '@/common/interface';
 import { Unactivate, WelcomeTitle, PluginRender } from '@/components';
-import { loggedUserInfoStore, userCenterStore} from '@/stores';
+import { loggedUserInfoStore, userCenterStore } from '@/stores';
 import { guard, handleFormError } from '@/utils';
 import { login, checkImgCode, UcAgent } from '@/services';
 import { PicAuthCodeModal } from '@/components/Modal';
