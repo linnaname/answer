@@ -1735,7 +1735,7 @@ plugin:
             other: ClientSecret
           description:
             other: Google 创建的应用后获取的 Client Secret
- github_connector:
+  github_connector:
     backend:
       name:
         other: GitHub
