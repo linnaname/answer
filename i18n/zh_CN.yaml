@@ -1713,3 +1713,25 @@ ui:
     post_hide_list: 此帖子已经从列表中隐藏。
     post_show_list: 该帖子已显示到列表中。
     post_reopen: 这个帖子已被重新打开.
+
+plugin:
+  google_connector:
+    backend:
+      name:
+        other: Google
+      info:
+        name:
+          other: Google 连接器
+        description:
+          other: 用于接入 Google 第三方登录
+      config:
+        client_id:
+          title:
+            other: ClientID
+          description:
+            other: Google 创建的应用后获取的 Client ID
+        client_secret:
+          title:
+            other: ClientSecret
+          description:
+            other: Google 创建的应用后获取的 Client Secret
