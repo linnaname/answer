@@ -13,7 +13,7 @@ const Index: FC = () => {
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const { user: userInfo } = loggedUserInfoStore();
-  const { visible, can_revision, revision } = sideNavStore();
+  const { visible } = sideNavStore();
   return (
     <Col
       xl={2}
@@ -40,20 +40,12 @@ const Index: FC = () => {
             <span>{t('header.nav.tag')}</span>
           </NavLink>
 
-          {can_revision || userInfo?.role_id === 2 ? (
+          { userInfo?.role_id === 2 ? (
             <>
               <div className="py-2 px-3 mt-3 small fw-bold">
                 {t('header.nav.moderation')}
               </div>
-              {can_revision && (
-                <NavLink to="/review" className="nav-link">
-                  <span>{t('header.nav.review')}</span>
-                  <span className="float-end">
-                    {revision > 99 ? '99+' : revision > 0 ? revision : ''}
-                  </span>
-                </NavLink>
-              )}
-
+             
               {userInfo?.role_id === 2 ? (
                 <NavLink to="/admin" className="nav-link">
                   {t('header.nav.admin')}
